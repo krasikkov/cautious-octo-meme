@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Калькулятор</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #faa5ec;
+        }
+
+        .calculator {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        input[type="number"] {
+            width: 200px;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        #operator-btns {
+            margin: 10px 0;
+        }
+
+        button {
+            padding: 10px 20px;
+            margin: 5px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        #plus, #minus, #multiply, #divide {
+            background-color: #4dabf7;
+            color: white;
+            animation: pulse 2s infinite;
+        }
+
+        #plus:active, #minus:active, #multiply:active, #divide:active {
+            background-color: #ffa94d;
+            transform: scale(0.95);
+        }
+
+        button[onclick="func()"] {
+            background-color: #40c057;
+            color: white;
+            width: 150px;
+            animation: glow 1.5s infinite;
+        }
+
+        button[onclick="func()"]:hover {
+            background-color: #ff8787;
+            transform: scale(1.05);
+            animation: none;
+        }
+        #result {
+            display: none;
+            position: absolute;
+            top: 60%;
+            width: 250px;
+            padding: 15px;
+            background-color: #7ff0ac;
+            border: 2px solid #4dabf7;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            font-size: 18px;
+            color: #333;
+            text-align: center;
+            transform: translateY(-50px);
+            opacity: 0;
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+
+        #result.show {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        @keyframes glow {
+            0% { box-shadow: 0 0 5px #40c057; }
+            50% { box-shadow: 0 0 15px #40c057; }
+            100% { box-shadow: 0 0 5px #40c057; }
+        }
+    </style>
+</head>
+<body>
+<input id="num1" type="number" placeholder="Введите первое число" />
+<div id="operator-btns">
+    <button id="plus" onclick="mr='+'">+</button>
+    <button id="minus" onclick="mr='-'">-</button>
+    <button id="multiply" onclick="mr='*'">*</button>
+    <button id="divide" onclick="mr='/'">/</button>
+</div>
+<input id="num2" type="number" placeholder="Введите второе число" />
+<br>
+<button onclick="func()">Посчитать</button>
+<p id="result"></p>
+<script>
+    let mr;
+
+    function func() {
+        let result;
+        let num1 = Number(document.getElementById("num1").value);
+        let num2 = Number(document.getElementById("num2").value);
+
+
+        if (!mr) {
+            document.getElementById("result").innerHTML = "choose operator debil!";
+            return;
+        }
+
+
+        switch (mr) {
+            case "+":
+                result = num1 + num2;
+                break;
+            case "-":
+                result = num1 - num2;
+                break;
+            case "*":
+                result = num1 * num2;
+                break;
+            case "/":
+                if (num2 === 0) {
+                    result = "divide on null-shilo brat";
+                } else {
+                    result = num1 / num2;
+                }
+                break;
+            default:
+                result = "idk bro, u are dumb";
+        }
+        document.getElementById("result").innerHTML = result;
+        showResult()
+    }
+    function showResult() {
+        let resultElement = document.getElementById("result");
+        resultElement.classList.add("show");
+        setTimeout(() => {
+            resultElement.classList.remove("show");
+        }, 5000);}
+</script>
+</body>
+</html>
